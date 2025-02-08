@@ -10,28 +10,6 @@ import {
 
 const DonateVolunteerPage = () => {
 
- 
-
-  const [selectedAmount, setSelectedAmount] = useState(null);
-  const [customAmount, setCustomAmount] = useState("");
-
-  const donationTiers = [
-    {
-      amount: 500,
-      impact: "Feeds 5 stray animals for a week",
-      icon: <Heart className="w-6 h-6" />,
-    },
-    {
-      amount: 1000,
-      impact: "Provides medical care for 2 injured animals",
-      icon: <Heart className="w-6 h-6" />,
-    },
-    {
-      amount: 2500,
-      impact: "Supports vaccination drive for 10 animals",
-      icon: <Heart className="w-6 h-6" />,
-    },
-  ];
 
   const volunteerRoles = [
     {
@@ -71,40 +49,11 @@ const DonateVolunteerPage = () => {
       </section>
 
       {/* Donation Options Section */}
-      {/* <section className="py-16 mt-20">
+      <section className="py-16 mt-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
-              {donationTiers.map((tier, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedAmount(tier.amount)}
-                  className={`p-6 rounded-lg border-2 transition-all ${
-                    selectedAmount === tier.amount
-                      ? "border-blue-600 bg-blue-50"
-                      : "border-gray-200 hover:border-blue-300"
-                  }`}
-                >
-                  <div className="text-blue-600 mb-2">{tier.icon}</div>
-                  <div className="text-2xl font-bold mb-2">₹{tier.amount}</div>
-                  <p className="text-gray-600 text-sm">{tier.impact}</p>
-                </button>
-              ))}
-            </div>
-
-            <div className="mb-12">
-              <div className="relative">
-                <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="number"
-                  placeholder="Enter custom amount"
-                  value={customAmount}
-                  onChange={(e) => setCustomAmount(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-lg focus:border-blue-600 focus:ring-0"
-                />
-              </div>
-            </div>
-
+            <h2 className="text-xl md:text-4xl text-center pb-8">Donate @ 8239498447
+            ( via Gpay/phonepay/Paytm )</h2>
             <div className="bg-gray-100 p-6 rounded-lg mb-12">
               <h3 className="text-lg font-semibold mb-2">Tax Benefits</h3>
               <p className="text-gray-600">
@@ -113,12 +62,12 @@ const DonateVolunteerPage = () => {
               </p>
             </div>
 
-            <button className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+            {/* <button className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all">
               Proceed to Donate
-            </button>
+            </button> */}
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Volunteer Section */}
       <section className="py-16 mt-20  bg-gray-100">

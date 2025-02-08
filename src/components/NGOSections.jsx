@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+
 import {
   Heart,
   Users,
@@ -9,6 +11,25 @@ import {
   MessageCircle,
   Leaf,
 } from "lucide-react";
+
+const AnimatedValue = ({ endValue }) => {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (value) =>
+    Math.round(value).toLocaleString()
+  );
+
+  React.useEffect(() => {
+    const animation = animate(count, endValue, {
+      duration: 2,
+      ease: "easeOut",
+      delay: 0.2,
+    });
+
+    return animation.stop;
+  }, [endValue, count]);
+
+  return <motion.span>{rounded}</motion.span>;
+};
 
 const AboutSection = () => {
   const stats = [
@@ -38,10 +59,40 @@ const AboutSection = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-24 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto text-center mb-16"
+        >
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent mb-6">
             About Our NGO
           </h2>
@@ -50,10 +101,15 @@ const AboutSection = () => {
             Making a difference in the lives of animals, one compassionate
             action at a time.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="space-y-6"
+          >
             <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
               <p className="text-lg text-gray-700 leading-relaxed">
                 We are dedicated to the protection and welfare of animals in
@@ -68,32 +124,46 @@ const AboutSection = () => {
                 coexistence between humans and animals.
               </p>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-2 gap-6"
+          >
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               return (
-                <div
+                <motion.div
                   key={index}
-                  className="group relative p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+                  variants={itemVariants}
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.2 },
+                  }}
+                  className="relative p-6 bg-white rounded-xl shadow-md"
                 >
                   <div
                     className={`absolute inset-0 bg-gradient-to-r ${stat.color} opacity-0 group-hover:opacity-5 rounded-xl transition-opacity duration-300`}
                   />
-                  <Icon
-                    className={`w-8 h-8 mb-4 text-gray-600 group-hover:scale-110 transition-transform duration-300`}
-                  />
+                  <motion.div
+                    initial={{ scale: 1 }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Icon className={`w-8 h-8 mb-4 text-gray-600`} />
+                  </motion.div>
                   <div className="text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                    {stat.value.toLocaleString()}+
+                    <AnimatedValue endValue={stat.value} />+
                   </div>
                   <div className="text-sm font-medium text-gray-600 mt-2">
                     {stat.label}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -237,6 +307,24 @@ const CampaignsSection = () => {
   );
 };
 
+const AnimatedCounter = ({ value }) => {
+  const numericValue = parseInt(value.replace(/[^0-9]/g, ''));
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, latest => `${Math.round(latest)}+`);
+
+  React.useEffect(() => {
+    const animation = animate(count, numericValue, {
+      duration: 2,
+      ease: "easeOut",
+      delay: 0.2
+    });
+
+    return animation.stop;
+  }, [numericValue, count]);
+
+  return <motion.span>{rounded}</motion.span>;
+};
+
 const MetricsSection = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
@@ -271,35 +359,86 @@ const MetricsSection = () => {
   return (
     <section className="py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto text-center mb-16"
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">Our Impact</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-violet-400 mx-auto mb-6 rounded-full" />
           <p className="text-xl text-gray-300">
             Making a measurable difference in animal welfare
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.2
+              }
+            }
+          }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16"
+        >
           {metrics.map((metric, index) => {
             const Icon = metric.icon;
             return (
-              <div key={index} className="text-center group">
-                <Icon className="w-8 h-8 mx-auto mb-4 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+              <motion.div 
+                key={index} 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: { duration: 0.6, ease: "easeOut" }
+                  }
+                }}
+                whileHover={{ scale: 1.05 }}
+                className="text-center group"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Icon className="w-8 h-8 mx-auto mb-4 text-blue-400" />
+                </motion.div>
                 <p className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">
-                  {metric.number}
+                  <AnimatedCounter value={metric.number} />
                 </p>
                 <p className="text-lg text-gray-300">{metric.label}</p>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
-        <div className="max-w-4xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="max-w-4xl mx-auto"
+        >
           <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">
             What People Say
           </h3>
-          <div className="relative bg-gray-800 rounded-xl p-8 shadow-lg">
-            <div className="text-center">
+          <motion.div 
+            className="relative bg-gray-800 rounded-xl p-8 shadow-lg"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.div 
+              key={activeTestimonial}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="text-center"
+            >
               <blockquote className="text-xl italic text-gray-300 mb-6">
                 "{testimonials[activeTestimonial].quote}"
               </blockquote>
@@ -311,7 +450,7 @@ const MetricsSection = () => {
                   {testimonials[activeTestimonial].role}
                 </div>
               </div>
-            </div>
+            </motion.div>
             <div className="flex justify-center gap-2 mt-6">
               {testimonials.map((_, index) => (
                 <button
@@ -325,12 +464,13 @@ const MetricsSection = () => {
                 />
               ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
 };
+
 
 const NGOSections = () => {
   return (

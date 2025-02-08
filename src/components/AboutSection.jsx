@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowRight, Users, Globe, Clock, Calendar } from "lucide-react";
 
 const links = [
@@ -11,19 +11,19 @@ const links = [
 const stats = [
   { 
     name: "Offices worldwide", 
-    value: "12",
+    value: 12,
     description: "Spanning across major global tech hubs",
     icon: Globe 
   },
   { 
     name: "Full-time colleagues", 
-    value: "300+",
+    value: 300,
     description: "Talented professionals from diverse backgrounds",
     icon: Users 
   },
   { 
     name: "Hours per week", 
-    value: "40",
+    value: 40,
     description: "Promoting healthy work-life balance",
     icon: Clock 
   },
@@ -39,29 +39,87 @@ const stats2 = [
   { 
     id: 1, 
     name: "Transactions every 24 hours", 
-    value: "44 million",
+    value: 44000000,
+    valueFormatted: "44 million",
     growth: "+23% from last year"
   },
   { 
     id: 2, 
     name: "Assets under holding", 
-    value: "$119 trillion",
+    value: 119000000000000,
+    valueFormatted: "$119 trillion",
     growth: "+12% annual growth"
   },
   { 
     id: 3, 
     name: "New users annually", 
-    value: "46,000",
+    value: 46000,
+    valueFormatted: "46,000",
     growth: "+35% user growth"
   },
 ];
+
+const AnimatedCounter = ({ value, duration = 2000, isNumeric = true }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentElement = document.getElementById(`counter-${value}`);
+    if (currentElement) {
+      observer.observe(currentElement);
+    }
+
+    return () => {
+      if (currentElement) {
+        observer.unobserve(currentElement);
+      }
+    };
+  }, [value]);
+
+  useEffect(() => {
+    if (!isVisible || !isNumeric) return;
+
+    let startValue = 0;
+    const endValue = Number(value);
+    const increment = endValue / (duration / 16);
+    let currentValue = startValue;
+
+    const timer = setInterval(() => {
+      currentValue += increment;
+      if (currentValue >= endValue) {
+        setCount(endValue);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(currentValue));
+      }
+    }, 16);
+
+    return () => clearInterval(timer);
+  }, [value, duration, isVisible, isNumeric]);
+
+  if (!isNumeric) return value;
+
+  return (
+    <span id={`counter-${value}`} className="transition-all duration-300">
+      {isVisible ? count.toLocaleString() : '0'}
+    </span>
+  );
+};
 
 export default function AboutSection() {
   return (
     <div className="relative">
       {/* First Section */}
       <div className="relative isolate overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-24 sm:py-32">
-        {/* Animated background patterns */}
         <div className="absolute inset-0 -z-10 opacity-30">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]" />
         </div>
@@ -117,7 +175,10 @@ export default function AboutSection() {
                       {stat.name}
                     </dt>
                     <dd className="mt-2 text-3xl font-semibold text-white">
-                      {stat.value}
+                      <AnimatedCounter 
+                        value={stat.value} 
+                        isNumeric={typeof stat.value === 'number'}
+                      />
                     </dd>
                     <p className="mt-1 text-sm text-gray-400">{stat.description}</p>
                   </div>
@@ -150,7 +211,10 @@ export default function AboutSection() {
                 <div className="relative rounded-lg bg-white p-6 shadow-lg ring-1 ring-gray-900/5">
                   <dt className="text-base text-gray-600">{stat.name}</dt>
                   <dd className="mt-4 text-4xl font-semibold tracking-tight text-gray-900">
-                    {stat.value}
+                    <AnimatedCounter 
+                      value={stat.value} 
+                      duration={2500}
+                    />
                   </dd>
                   <p className="mt-2 text-sm font-medium text-blue-500">
                     {stat.growth}
