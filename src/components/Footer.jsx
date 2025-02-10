@@ -33,27 +33,27 @@ const Footer = () => {
               Together we can make a difference in their lives.
             </p>
             <div className="flex space-x-4">
-              <a
+              <NavLink
                 href="#"
                 className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors group"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5 text-gray-300 group-hover:text-blue-400" />
-              </a>
-              <a
+              </NavLink>
+              <NavLink
                 href="#"
                 className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors group"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5 text-gray-300 group-hover:text-blue-400" />
-              </a>
-              <a
+              </NavLink>
+              <NavLink
                 href="#"
                 className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors group"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5 text-gray-300 group-hover:text-blue-400" />
-              </a>
+              </NavLink>
             </div>
           </div>
 
@@ -65,13 +65,13 @@ const Footer = () => {
             <ul className="space-y-4">
               {NavbarLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <NavLink
+                    to={link.href}
                     className="group flex items-center text-gray-300 hover:text-blue-400 transition-colors"
                   >
                     <ChevronRight className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
                     {link.name}
-                  </a>
+                  </NavLink>
                 </li>
               ))}
             </ul>
