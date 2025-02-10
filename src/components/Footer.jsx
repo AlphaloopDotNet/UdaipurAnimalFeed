@@ -9,15 +9,9 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { NavbarLinks } from "../utils/constant";
 
 const Footer = () => {
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About Us", href: "/about" },
-    { name: "Donate", href: "/donate" },
-    { name: "Contact", href: "/contact" },
-  ];
-
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-gray-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -26,7 +20,12 @@ const Footer = () => {
           <div className="space-y-6">
             <div className="flex items-center">
               <NavLink to="/" className="flex items-center space-x-2">
-                <img width={70} src="/images/logo.avif" alt="Logo" className="brightness-90 hover:brightness-100 transition-all" />
+                <img
+                  width={70}
+                  src="/images/logo.avif"
+                  alt="Logo"
+                  className="brightness-90 hover:brightness-100 transition-all"
+                />
               </NavLink>
             </div>
             <p className="text-gray-300">
@@ -64,7 +63,7 @@ const Footer = () => {
               Navigation
             </h3>
             <ul className="space-y-4">
-              {navLinks.map((link) => (
+              {NavbarLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
@@ -96,7 +95,10 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                <a href="mailto:help@ngoudaipur.org" className="text-gray-300 hover:text-blue-400 transition-colors">
+                <a
+                  href="mailto:help@ngoudaipur.org"
+                  className="text-gray-300 hover:text-blue-400 transition-colors"
+                >
                   help@ngoudaipur.org
                 </a>
               </li>
