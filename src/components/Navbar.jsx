@@ -30,7 +30,7 @@ const Navbar = () => {
       ${
         scrolled
           ? "bg-white/95 shadow-md backdrop-blur-md py-1"
-          : "bg-gradient-to-b from-gray-50 to-white py-1"
+          : "bg-gray-300 py-1"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,7 +48,7 @@ const Navbar = () => {
                   <NavLink
                     to={link.href}
                     className={({ isActive }) =>
-                      `group flex items-center text-gray-600 hover:text-blue-600 transition-colors px-2 py-1
+                      `group flex items-center text-gray-700 hover:text-blue-600 transition-colors px-2 py-1
                       ${isActive ? "text-blue-600 font-semibold" : ""}`
                     }
                   >
