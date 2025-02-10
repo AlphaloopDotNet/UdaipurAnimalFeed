@@ -56,7 +56,7 @@ const ContactPage = () => {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/70" />
           <img
-            src="/api/placeholder/1920/1080"
+            src="/images/3.png"
             alt="Contact Hero"
             className="w-full h-full object-cover"
           />
