@@ -1,84 +1,90 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Gallery = () => {
-
-  const galleryImages = [
-    {
-      column: 1,
-      images: [
-        { src: "/images/bird.jpg", alt: "Migratory birds at Menar Lake" },
-        { src: "/images/bird1.JPG", alt: "Scenic view of Menar Lake" },
-        { src: "/images/bird2.jpg", alt: "Wildlife at Menar" },
-      ],
-    },
-    {
-      column: 2,
-      images: [
-        { src: "/images/BirdGroup2.jpg", alt: "Local birds of Menar" },
-        { src: "/images/birdsGroup.JPG", alt: "Sunset at Menar Lake" },
-        { src: "/images/FlyingCap.jpg", alt: "Local culture of Menar" },
-      ],
-    },
-    {
-      column: 3,
-      images: [
-        { src: "/images/HelloBird.jpg", alt: "Conservation efforts at Menar" },
-        { src: "/images/bird3.jpg", alt: "Rare bird species" },
-        { src: "/images/menar.jpg", alt: "Morning at Menar Lake" },
-      ],
-    },
-    {
-      column: 4,
-      images: [
-        { src: "/images/NoPlasticMenar.jpg", alt: "Village life at Menar" },
-        { src: "/images/whiteBird.JPG", alt: "Community conservation" },
-        { src: "/images/BlackBird.JPG", alt: "Local wildlife" },
-      ],
-    },
+  const images = [
+    { src: "/images/gallery/gallery.avif", alt: "Rescue Dogs" },
+    { src: "/images/gallery/gallery1.avif", alt: "Rescue Dogs" },
+    { src: "/images/gallery/gall2.avif", alt: "Rescue Dogs" },
+    { src: "/images/gallery/gall3.avif", alt: "Rescue Dogs" },
+    { src: "/images/gallery/gall4.avif", alt: "Rescue Dogs" },
+    { src: "/images/gallery/gall5.avif", alt: "Rescue Dogs" },
+    { src: "/images/gallery/gall7.avif", alt: "Rescue Dogs" },
+    { src: "/images/gallery/gall8.avif", alt: "Rescue Dogs" },
+    { src: "/images/gallery/gall2.avif", alt: "Rescue Dogs" },
   ];
 
+  const [selectedImage, setSelectedImage] = useState(null);
+
   return (
-    <section className=" bg-gray-50">
-      <div className="mx-auto px-6 ">
-        {/* Gallery Header */}
-        <div className="relative isolate px-6 pt-14 lg:px-8">
-          <div className="mx-auto max-w-5xl py-28">
-            <div className="text-center">
-              <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 ">
-                Exlore some Amazing Moments
-              </h1>
-              {/* <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-                A hidden gem where nature thrives and birds find sanctuary.
-              </p> */}
-            </div>
+    <section className="min-h-screen bg-gray-50 text-gray-900">
+      <section className="relative h-[500px] flex items-center bg-gray-200">
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <h1 className="text-4xl md:text-6xl font-bold ">
+              Explore Amazing Moments
+            </h1>
+            <p className="text-xl ">
+              Your support helps us provide food, shelter, and medical care to
+              stray animals in need.
+            </p>
           </div>
         </div>
+      </section>
+      <div className=" py-10  max-w-7xl mx-auto">
+        {/* Gallery Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Gallery</h1>
+          <p className="text-lg text-gray-600">
+            Moments we've captured along the way
+          </p>
+        </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-24">
-          {galleryImages.map((column, columnIndex) => (
-            <div key={`column-${columnIndex}`} className="grid gap-6">
-              {column.images.map((image, imageIndex) => (
-                <div
-                  key={`image-${columnIndex}-${imageIndex}`}
-                  className="relative overflow-hidden group rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-                >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                  />
-                  {/* <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <p className="text-sm font-medium">{image.alt}</p>
-                    </div>
-                  </div> */}
-                </div>
-              ))}
-            </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {images.map((image, index) => (
+            <img
+              className="h-auto max-w-full rounded-lg"
+              src={image.src}
+              alt={image.alt}
+              onClick={() => setSelectedImage(image)}
+            />
           ))}
         </div>
+
+        {selectedImage && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div className="relative max-w-4xl w-full">
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="w-full h-auto max-h-[90vh] object-contain rounded-lg"
+              />
+              <button
+                className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedImage(null);
+                }}
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

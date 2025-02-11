@@ -7,6 +7,7 @@ import About from "./pages/About";
 import ScrollToTop from "../src/utils/scrollTop";
 import DonateVolunteerPage from "./pages/DonateVolunteerPage";
 import ContactPage from "./pages/Contact";
+import Gallery from "./pages/Gallery";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/contacts" element={<ContactPage />}></Route>
+          <Route path="/gallery" element={<Gallery />}></Route>
 
           <Route path="/donate" element={<DonateVolunteerPage />}></Route>
         </Routes>
